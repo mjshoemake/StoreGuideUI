@@ -21,24 +21,19 @@ export class NavItemService {
 		// Populate nav items list
 	  this.navItems = [
 	    new NavItem({
-			  href: '/resume',
-  			glyphicon: 'glyphicon-folder-open',
-	  		displayText: 'Resume'
+			  href: '/stores',
+  			glyphicon: 'glyphicon-shopping-cart',
+	  		displayText: 'Stores'
 		  }),
   	  new NavItem({
-	  		href: '/articles',
-		  	glyphicon: 'glyphicon-pencil',
-			  displayText: 'Articles'
+	  		href: '#',
+		  	glyphicon: 'glyphicon-search',
+			  displayText: 'Search'
   		}),
 	    new NavItem({
-		  	href: '/downloads',
-			  glyphicon: 'glyphicon-download-alt',
-		  	displayText: 'Downloads'
-	  	}),
-	    new NavItem({
-		  	href: '/referrals',
-			  glyphicon: 'glyphicon-thumbs-up',
-		  	displayText: 'Referrals'
+		  	href: '#',
+			  glyphicon: 'glyphicon-wrench',
+		  	displayText: 'Preferences'
 	  	})
   	];
 	}

@@ -27,7 +27,7 @@ export class PageComponent  {
 	brandSurname: string = '';
 
 	brandIcon = new BrandIcon({
-			image: 'assets/images/crossewalk3.png',
+			image: 'assets/images/treasure-map2-640.png',
 			displayText: 'Map My Shop'
 		});
 
