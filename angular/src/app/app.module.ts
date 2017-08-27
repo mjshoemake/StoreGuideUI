@@ -3,7 +3,7 @@ import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
-//import { DownloadsModule } from './downloads/downloads.module';
+import { StoresModule } from './stores/stores.module';
 //import { ReferralsModule } from './referrals/referrals.module';
 //import { ArticlesModule } from './articles/articles.module';
 //import { ResumeModule } from './resume/resume.module';
@@ -29,7 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     HttpModule,
     JsonpModule,
-//    DownloadsModule,
+    StoresModule,
 //    ReferralsModule,
 //    ArticlesModule,
 //    ResumeModule,

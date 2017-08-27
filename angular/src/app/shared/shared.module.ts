@@ -6,18 +6,23 @@ import { FormsModule } from '@angular/forms';
 import { CollapsiblePanelComponent } from './collapsible-panel.component';
 import { CollapsibleSubPanelComponent } from './collapsible-sub-panel.component';
 import { TitledPanelComponent } from './titled-panel.component';
+import { BreadcrumbsComponent } from './breadcrumbs.component';
+import { BreadcrumbsService } from './breadcrumbs.service';
 
 @NgModule({
   imports: [ CommonModule ],
   declarations: [
   	CollapsiblePanelComponent,
   	CollapsibleSubPanelComponent,
-  	TitledPanelComponent
+  	TitledPanelComponent,
+    BreadcrumbsComponent
   ],
+  providers: [BreadcrumbsService],
   exports: [
   	CollapsiblePanelComponent,
   	CollapsibleSubPanelComponent,
   	TitledPanelComponent,
+    BreadcrumbsComponent,
     CommonModule,
     FormsModule
   ]

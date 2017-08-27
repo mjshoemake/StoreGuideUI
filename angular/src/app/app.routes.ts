@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: '/resume',
+    redirectTo: '/stores',
     pathMatch: 'full'
   }
 ];

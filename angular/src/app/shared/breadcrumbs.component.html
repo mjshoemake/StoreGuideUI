@@ -1,0 +1,8 @@
+<div class="breadcrumbs">
+  <ol class="breadcrumb">
+    <li *ngFor="let breadcrumb of breadcrumbsService.observableList | async" [class.last-item]="active">
+    <!-- <li *ngFor="let breadcrumb of (breadcrumbs | async)" [class.last-item]="active"> -->
+      <a href="{{breadcrumb.href}}">{{breadcrumb.displayText}}</a>
+    </li>
+  </ol>
+</div>
