@@ -1,4 +1,5 @@
 export class NavItem {
+  id: string = '';
 	href: string = '';
   glyphicon: string = '';
   displayText: string = '';

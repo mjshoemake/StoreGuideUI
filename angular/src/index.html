@@ -15,9 +15,10 @@
     <link rel="icon" href="assets/images/treasure-map2-640.png">
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="google-signin-client_id" content="927947556211-s81ref651i2dkco6ml45ttdfs0q1viiv.apps.googleusercontent.com">
 
 		<!-- Javascript -->
-		<script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
 		<script src="assets/js/back-to-top.js"></script>
 
 		<!-- Angular2 Dependencies -->
@@ -29,6 +30,14 @@
 				packages: {'app': {defaultExtension: 'ts'}},
 				map: { 'app': './angular2/src/app' }
 			});
+
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      }
     	</script>
 	</head>
 	<body>
@@ -38,6 +47,7 @@
     <script src="assets/js/bootstrap.js"></script>
     <script src="https://rawgithub.com/WickyNilliams/headroom.js/gh-pages/assets/scripts/main.js"></script>
     <script src="assets/js/slidingHeader.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 
   </body>
 </html>

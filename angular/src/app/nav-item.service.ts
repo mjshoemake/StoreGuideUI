@@ -21,20 +21,29 @@ export class NavItemService {
 		// Populate nav items list
 	  this.navItems = [
 	    new NavItem({
+        id: 'nav1',
 			  href: '/stores',
   			glyphicon: 'glyphicon-shopping-cart',
 	  		displayText: 'Stores'
 		  }),
   	  new NavItem({
+        id: 'nav2',
 	  		href: '#',
 		  	glyphicon: 'glyphicon-search',
 			  displayText: 'Search'
   		}),
 	    new NavItem({
+        id: 'nav3',
 		  	href: '#',
 			  glyphicon: 'glyphicon-wrench',
 		  	displayText: 'Preferences'
-	  	})
+	  	})  /*,
+      new NavItem({
+        id: 'googleBtn',
+        href: '#',
+        glyphicon: '\'glyphicon-search',
+        displayText: 'Login'
+      }) */
   	];
 	}
 

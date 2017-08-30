@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
-import { NgStyle } from '@angular/common';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Rx';
-import { Logger } from 'angular2-logger/app/core/logger';
 import { LogService } from '../log.service';
 import {StoresService } from './stores.service';
 import { PageComponent } from '../page.component';
-import { CollapsiblePanelComponent } from '../shared/collapsible-panel.component';
-//import { CollapsibleSubPanelComponent } from '../shared/collapsible-sub-panel.component';
 
 @Component({
 	selector: 'stores',
