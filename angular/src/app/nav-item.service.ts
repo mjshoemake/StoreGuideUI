@@ -1,8 +1,9 @@
 import { Inject } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { NavItem } from './nav-item';
-import { Logger } from 'angular2-logger/app/core/logger';
 import { LogService } from './log.service';
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 // NOTE: For now, there is no DB so data is stored
@@ -13,6 +14,8 @@ export class NavItemService {
 
 	// Placeholder for items.
 	navItems: NavItem[] = [];
+  private _observableList: BehaviorSubject<NavItem[]> = new BehaviorSubject([]);
+  get observableList(): Observable<NavItem[]> { return this._observableList.asObservable() }
 
 	constructor(private _logger:LogService) {
 		this.log = _logger;
@@ -20,34 +23,48 @@ export class NavItemService {
 
 		// Populate nav items list
 	  this.navItems = [
-	    new NavItem({
-        id: 'nav1',
-			  href: '/stores',
-  			glyphicon: 'glyphicon-shopping-cart',
-	  		displayText: 'Stores'
-		  }),
-  	  new NavItem({
-        id: 'nav2',
-	  		href: '#',
-		  	glyphicon: 'glyphicon-search',
-			  displayText: 'Search'
-  		}),
-	    new NavItem({
-        id: 'nav3',
-		  	href: '#',
-			  glyphicon: 'glyphicon-wrench',
-		  	displayText: 'Preferences'
-	  	})  /*,
-      new NavItem({
-        id: 'googleBtn',
-        href: '#',
-        glyphicon: '\'glyphicon-search',
-        displayText: 'Login'
-      }) */
+            new NavItem({
+              id: 'nav1',
+              href: '/stores',
+              glyphicon: 'glyphicon-shopping-cart',
+              displayText: 'Stores'
+            }),
+            new NavItem({
+              id: 'nav2',
+              href: '#',
+              glyphicon: 'glyphicon-search',
+              displayText: 'Search'
+            }),
+            new NavItem({
+              id: 'nav3',
+              href: '#',
+              glyphicon: 'glyphicon-wrench',
+              displayText: 'Preferences'
+            }),
+            new NavItem({
+              id: 'googleBtn',
+              href: '#',
+              glyphicon: 'glyphicon-user',
+              displayText: 'Login'
+            })
   	];
 	}
 
-	// GET /navitems
+	clear() {
+    this.log.debug('NavItemService.clear()');
+    this.navItems = [];
+  }
+
+	add(item: NavItem) {
+    this.log.debug('NavItemService.add() - ' + item.displayText);
+    this.navItems.push(item);
+  }
+
+  refresh() {
+    this.log.debug('NavItemService.refresh()');
+    this._observableList.next(this.navItems);
+  }
+
 	getAll(): NavItem[] {
 		this.log.debug('NavItemService.getAll() count=' + this.navItems.length);
 		return this.navItems;

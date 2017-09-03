@@ -17,7 +17,7 @@
           <img class="app-icon" src="{{brandIcon.image}}" alt="{{brandIcon.displayText}}" style="width:32px;height:28px; vertical-align: middle;"/>
           <b class="brand__forename">{{brandForename}}</b>&nbsp;
           <b class="brand__surname hide-on-mobile">{{brandSurname}}</b>
-          <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>
+<!--          <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>  -->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -29,19 +29,26 @@
 -->
             <ul class="nav navbar-nav navbar-right">
               <li *ngFor="let navitem of navItems" class="nav">
+                <ng-container *ngIf="navitem.id != 'googleBtn'; else elseBlock">
+                  <a routerLink="{{navitem.href}}" routerLinkActive="active">
+                    <span class="glyphicon {{navitem.glyphicon}}"></span>
+                    &nbsp;&nbsp;{{navitem.displayText}}
+                  </a>
+                </ng-container>
+                <ng-template #elseBlock>
+                  <ng-container *ngIf="loginService.loggedIn; else elseBlock2">
+                    <a (click)="logout()">Sign out</a>
+                  </ng-container>
+                  <ng-template #elseBlock2>
+                    <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>
+                  </ng-template>
 <!--
-                <a routerLink="{{navitem.href}}" routerLinkActive="active"><span class="glyphicon {{navitem.glyphicon}}"></span>&nbsp;&nbsp;{{navitem.displayText}}</a>
-
+                  <a id="{{navitem.id}}" data-onsuccess="onSignIn">
+                    <span class="glyphicon {{navitem.glyphicon}}"></span>
+                    &nbsp;&nbsp;{{navitem.displayText}}
+                  </a>
 -->
-                <a *ngIf="navitem.id != 'googleBtn'" routerLink="{{navitem.href}}" routerLinkActive="active">
-                  <span class="glyphicon {{navitem.glyphicon}}"></span>
-                  &nbsp;&nbsp;{{navitem.displayText}}
-                </a>
-                <a  *ngIf="navitem.id == 'googleBtn'" id="navitem.id" data-onsuccess="onSignIn">
-                  <span class="glyphicon {{navitem.glyphicon}}"></span>
-                  &nbsp;&nbsp;{{navitem.displayText}}
-                </a>
-                <a routerLinkActive="active"><span class="glyphicon {{navitem.glyphicon}}"></span>&nbsp;&nbsp;{{navitem.displayText}}</a>
+                </ng-template>
               </li>
             </ul>
 <!--

@@ -48,7 +48,7 @@ export class StoresComponent  {
 
     this.log.info("StoreComponent.constructor()  About to call clearAndAddBreadcrumb()...");
     //_pageComp.clearAndAddBreadcrumb('/stores', 'My Stores')
-    _pageComp.clearAndAddBreadcrumb('/mapmyshop/stores', 'My Stores');
+    _pageComp.clearAndAddBreadcrumb('/mapmyshop/#/stores', 'My Stores');
 	}
 
 }

@@ -1,12 +1,12 @@
 import { Component, Injectable, Input } from '@angular/core';
-import { Logger } from 'angular2-logger/app/core/logger';
-import { AfterViewInit } from '@angular/core';
 import { LogService } from './log.service';
 import { BrandIcon } from './brand-icon';
 import { NavItem } from './nav-item';
+import { LoginService } from './login.service';
 
 // For Google Auth
 declare const gapi: any;
+declare let mapComponents: any;
 
 @Component({
 	selector: 'appHeader',
@@ -26,16 +26,32 @@ export class HeaderComponent {  // implements AfterViewInit {
 	@Input() navItems: NavItem[] = [];
 
   log: LogService;
+  loginService: LoginService;
+  loggedInUserId: string;
 
   // For Google Auth
   public auth2: any;
 
-	constructor(private _logger: LogService) {
+	constructor(private _logger: LogService, _loginService: LoginService) {
 		this.log = _logger;
+		this.loginService = _loginService;
 		this.log.debug('HeaderComponent.constructor() BEGIN');
 		this.log.info('HeaderComponent.constructor() BEGIN');
 		this.log.info('HeaderComponent.constructor()    NavItem count=' + this.navItems.length);
+		mapComponents.headerComp = this;
 	}
+
+	loggedInEvent(_id: string, _name: string, _firstName: string, _lastName: string, _imageUrl: string, _email: string) {
+    this.log.info("HeaderComponent.loggedInEvent() name=" + _name);
+    this.log.info("HeaderComponent.loggedInEvent() email=" + _email);
+    this.loginService.saveLoggedInUser(_id, _name, _firstName, _lastName, _imageUrl, _email);
+    this.loggedInUserId = this.loginService.getLoginId();
+  }
+
+  logout() {
+    this.log.info("HeaderComponent.logout()");
+    this.loginService.logout();
+  }
 
 	closeHamburgerMenu() {
 	  let button = document.getElementById('hamburgerButton');
