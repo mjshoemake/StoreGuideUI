@@ -25,25 +25,36 @@ export class NavItemService {
 	  this.navItems = [
             new NavItem({
               id: 'nav1',
+              href: '/home',
+              classPrefix: 'open',
+              glyphicon: 'glyphicon-home',
+              displayText: 'Home'
+            }),
+            new NavItem({
+              id: 'nav2',
               href: '/stores',
+              classPrefix: 'protected',
               glyphicon: 'glyphicon-shopping-cart',
               displayText: 'Stores'
             }),
             new NavItem({
-              id: 'nav2',
+              id: 'nav3',
               href: '#',
+              classPrefix: 'protected',
               glyphicon: 'glyphicon-search',
               displayText: 'Search'
             }),
             new NavItem({
-              id: 'nav3',
+              id: 'nav4',
               href: '#',
+              classPrefix: 'protected',
               glyphicon: 'glyphicon-wrench',
               displayText: 'Preferences'
             }),
             new NavItem({
               id: 'googleBtn',
               href: '#',
+              classPrefix: 'googleAuth',
               glyphicon: 'glyphicon-user',
               displayText: 'Login'
             })

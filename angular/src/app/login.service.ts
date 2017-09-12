@@ -1,7 +1,9 @@
-import { Injectable, Output, EventEmitter } from '@angular/core';
+import { Injectable, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Login } from './login';
 import { Logger } from 'angular2-logger/app/core/logger';
 import { LogService } from './log.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Injectable()
 
@@ -14,15 +16,40 @@ import { LogService } from './log.service';
 export class LoginService {
 
 	log: LogService;
+	private router: Router;
 
   loggedInUser: Login;
-  loggedInValue: boolean;
-  @Output() loggedInChange = new EventEmitter();
+  loggedInValue: boolean = false;
+  headerChangeDetector: ChangeDetectorRef;
+  gapi: any;
 
-  constructor(private _logger:LogService) {
+
+  //@Output() loggedInChange = new EventEmitter();
+  @Output() loggedInChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  constructor(private _logger:LogService, _router: Router) {
 		this.log = _logger;
-		this.log.debug('LoginService.constructor()');
+		this.router = _router;
+    this.log.debug('LoginService.constructor()');
+		if (this.router) {
+		  this.log.info('LoginService.constructor() Router set properly.')
+    } else {
+		  this.log.info('LoginService.constructor() Router is null.')
+    }
 	}
+
+	setGoogleApi(_gapi: any) {
+    this.gapi = _gapi;
+    if (this.gapi) {
+      this.log.info('LoginService.setGoogleApi() gapi set properly.')
+    } else {
+      this.log.info('LoginService.setGoogleApi() gapi is null.')
+    }
+  }
+
+	setHeaderChangeDetector(changeDetector: ChangeDetectorRef) {
+    this.headerChangeDetector = changeDetector;
+  }
 
 	getLoginId(): string {
 	  if (this.loggedInUser != null) {
@@ -34,13 +61,15 @@ export class LoginService {
     }
 	}
 
-	//@Input
-  //get loggedIn(): boolean {
-  //  return this.loggedInValue;
-  //}
+	@Input('loggedIn')
+  get loggedIn():boolean {
+    this.log.info('LoginService.loggedIn() get value=' + this.loggedInValue);
+    return this.loggedInValue;
+  }
 
   set loggedIn(_val: boolean) {
     this.loggedInValue = _val;
+    this.log.info('LoginService.loggedIn() set value=' + this.loggedInValue);
     this.loggedInChange.emit(this.loggedInValue);
   }
 
@@ -55,8 +84,26 @@ export class LoginService {
   }
 
   logout() {
-	  this.loggedInUser = undefined;
-	  this.loggedIn = false;
+    if (this.gapi) {
+      this.log.info('LoginService.logout() gapi set properly.')
+    } else {
+      this.log.info('LoginService.logout() gapi is null.')
+    }
+    let auth2: any = this.gapi.auth2.getAuthInstance();
+    auth2.signOut().then(() => {
+      console.log('User signed out.');
+      if (this.router) {
+        this.log.info('LoginService.logout() Router set properly.')
+      } else {
+        this.log.info('LoginService.logout() Router is null.')
+      }
+      this.router.navigate(['/home']);
+      this.loggedIn = false;
+      this.loggedInUser = undefined;
+      if (this.headerChangeDetector) {
+        this.headerChangeDetector.detectChanges();
+      }
+    });
   }
 
   saveLoggedInUser(_id: string, _name: string, _firstName: string, _lastName: string, _imageUrl: string, _email: string) {
@@ -68,6 +115,9 @@ export class LoginService {
       this.loggedInUser = new Login({id: _id, name: _name, firstName: _firstName, lastName: _lastName, imageUrl: _imageUrl, email: _email});
       this.loggedIn = true;
       this.log.info('LoginService.saveLoggedInUser() User successfully logged in (' + _email + ').');
+      if (this.headerChangeDetector) {
+        this.headerChangeDetector.detectChanges();
+      }
     }
   }
 

@@ -3,6 +3,8 @@ import { LogService } from './log.service';
 import { BrandIcon } from './brand-icon';
 import { NavItem } from './nav-item';
 import { LoginService } from './login.service';
+import { ChangeDetectorRef } from '@angular/core';
+import {Change} from "@angular/cli/lib/ast-tools";
 
 // For Google Auth
 declare const gapi: any;
@@ -25,18 +27,33 @@ export class HeaderComponent {  // implements AfterViewInit {
 	@Input() brandSurname: string = 'Brand';
 	@Input() navItems: NavItem[] = [];
 
+	// Manages the visibility of the navigation items
+  displayNavItems: string = 'hidden';
+  displaySignIn: string = 'display-block';
+  displaySignOut: string = 'hidden';
+
   log: LogService;
   loginService: LoginService;
+  changeDetector: ChangeDetectorRef;
   loggedInUserId: string;
 
   // For Google Auth
   public auth2: any;
 
-	constructor(private _logger: LogService, _loginService: LoginService) {
+	constructor(private _logger: LogService, _loginService: LoginService, _changeDetector: ChangeDetectorRef) {
 		this.log = _logger;
+    this.log.info('HeaderComponent.constructor() BEGIN');
 		this.loginService = _loginService;
-		this.log.debug('HeaderComponent.constructor() BEGIN');
-		this.log.info('HeaderComponent.constructor() BEGIN');
+		this.changeDetector = _changeDetector;
+		this.loginService.setHeaderChangeDetector(_changeDetector);
+    if (gapi) {
+      this.log.info('HeaderComponent.constructor() gapi set properly.')
+      this.loginService.setGoogleApi(gapi);
+    } else {
+      this.log.info('HeaderComponent.constructor() gapi is null.')
+    }
+    this.log.info('HeaderComponent.constructor() ');
+
 		this.log.info('HeaderComponent.constructor()    NavItem count=' + this.navItems.length);
 		mapComponents.headerComp = this;
 	}
@@ -46,14 +63,38 @@ export class HeaderComponent {  // implements AfterViewInit {
     this.log.info("HeaderComponent.loggedInEvent() email=" + _email);
     this.loginService.saveLoggedInUser(_id, _name, _firstName, _lastName, _imageUrl, _email);
     this.loggedInUserId = this.loginService.getLoginId();
+    this.hideLogin();
   }
 
   logout() {
     this.log.info("HeaderComponent.logout()");
+    if (gapi) {
+      this.log.info('HeaderComponent.logout() gapi set properly.')
+      this.loginService.setGoogleApi(gapi);
+    } else {
+      this.log.info('HeaderComponent.logout() gapi is null.')
+    }
     this.loginService.logout();
+    this.showLogin();
   }
 
-	closeHamburgerMenu() {
+  hideLogin() {
+	  this.displayNavItems = 'display-inline';
+	  this.displaySignIn = 'hidden';
+	  this.displaySignOut = 'display-block';
+    this.log.info("HeaderComponent.hideLogin()");
+    this.changeDetector.detectChanges();
+  }
+
+  showLogin() {
+    this.displayNavItems = 'hidden';
+    this.displaySignIn = 'display-block';
+    this.displaySignOut = 'hidden';
+    this.log.info("HeaderComponent.showLogin()");
+    this.changeDetector.detectChanges();
+  }
+
+  closeHamburgerMenu() {
 	  let button = document.getElementById('hamburgerButton');
 	  let collapsible = document.getElementById('div-navbar-collapsible');
 	  this.log.info('Collapsing menu after page change...');
