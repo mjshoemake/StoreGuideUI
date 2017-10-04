@@ -19,7 +19,7 @@ export class NavItemService {
 
 	constructor(private _logger:LogService) {
 		this.log = _logger;
-		this.log.debug('NavItemService.constructor()');
+		this.log.info('NavItemService.constructor()');
 
 		// Populate nav items list
 	  this.navItems = [

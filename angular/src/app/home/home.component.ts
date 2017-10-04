@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { LogService } from '../log.service';
+import { PageService } from '../page.service';
 import { PageComponent } from '../page.component';
 
 @Component({
@@ -12,6 +13,7 @@ import { PageComponent } from '../page.component';
 @Injectable()
 export class HomeComponent  {
 	log: LogService;
+  pageService: PageService;
 
 /*
 	interval: number = 60;
@@ -31,19 +33,22 @@ export class HomeComponent  {
 */
 
 	constructor(private _logger: LogService,
+              private _pageService: PageService,
 	            private _pageComp: PageComponent) {
 		this.log = _logger;
+		this.pageService = _pageService;
 		this.log.info('HomeComponent.constructor() BEGIN');
 
-		// Set up page data.
-    this.log.info("HomeComponent.constructor()  Closing hamburger menu...");
-    _pageComp.closeHamburgerMenu();
-    this.log.info("HomeComponent.constructor()  Closing hamburger menu... Done.");
-		_pageComp.pageName = 'Home';
-		_pageComp.subTitle = 'This is the MapMyShop home page.  More to come...';
+    if (this.pageService.attemptToChangePage('Home', 'This is the MapMyShop home page.  More to come...')) {
+      // Set up page data.
+      this.log.info("HomeComponent.constructor()  Closing hamburger menu...");
+      _pageComp.closeHamburgerMenu();
+      this.log.info("HomeComponent.constructor()  Closing hamburger menu... Done.");
 
-    this.log.info("StoreComponent.constructor()  About to call clearAndAddBreadcrumb()...");
-    _pageComp.clearAndAddBreadcrumb('/mapmyshop/#/home', 'Home');
+      this.log.info("HomeComponent.constructor()  About to call clearAndAddBreadcrumb()...");
+      _pageComp.clearAndAddBreadcrumb('/mapmyshop/#/home', 'Home');
+    }
+    //_pageComp.refresh();
 	}
 
 }

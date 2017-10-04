@@ -15,9 +15,9 @@ export class FooterComponent  {
 	log: LogService;
 
 	constructor(private _logger: LogService) {
-		this.log = _logger; 
-		this.log.debug('HeaderComponent.constructor() BEGIN');
-		this.log.info('HeaderComponent.constructor() BEGIN');
+		this.log = _logger;
+		this.log.debug('FooterComponent.constructor() BEGIN');
+		this.log.info('FooterComponent.constructor() BEGIN');
 	}
-	
+
 }

@@ -16,7 +16,7 @@
           </button>
           <img class="app-icon" src="{{brandIcon.image}}" alt="{{brandIcon.displayText}}" style="width:32px;height:28px; vertical-align: middle;"/>
           <b class="brand__forename">{{brandForename}}</b>&nbsp;
-          <b class="brand__surname hide-on-mobile">{{brandSurname}}|{{loginService.loggedIn}}|{{loginService.loggedInValue}}|</b>
+          <b class="brand__surname hide-on-mobile">{{brandSurname}}</b>
 <!--          <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>  -->
         </div>
 
@@ -37,11 +37,11 @@
                 </ng-container>
                 <ng-template #elseBlock>
                   <a class="{{displaySignOut}}" (click)="logout()">Sign out</a>
-                  <div id="googleBtn" class="g-signin2 {{displaySignIn}}" data-onsuccess="onSignIn"></div>
                 </ng-template>
               </li>
             </ul>
-            {{loginService.loggedIn}}
+            <div id="googleBtn" class="g-signin2 {{displaySignIn}}" data-onsuccess="onSignIn"></div>
+
 <!--
           </div>
 -->

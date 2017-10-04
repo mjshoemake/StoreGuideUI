@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { MainComponent } from './main.component';
 import { Logger } from 'angular2-logger/app/core/logger';
+import { PageService } from './page.service';
 import { LogService } from './log.service';
+import { LoginService } from './login.service';
 
 @Component({
 	selector: 'app-root',

@@ -13,15 +13,19 @@ export class StoresService {
   // List of franchises
   franchises: Franchise[] = [];
   private _observableList: BehaviorSubject<Franchise[]> = new BehaviorSubject([]);
-  get observableList(): Observable<Franchise[]> { return this._observableList.asObservable() }
+  get observableList(): Observable<Franchise[]> {
+    this.log.info('StoresService.observableList() get  Franchise list size=' + this.franchises.length);
+    return this._observableList.asObservable()
+  }
 
   constructor(private _logger:LogService) {
 		this.log = _logger;
-		this.log.debug('StoresService.constructor() BEGIN');
+		this.log.info('StoresService.constructor() BEGIN');
 		this.createDummyData();
 	}
 
 	createDummyData() {
+    this.log.info('StoresService.createDummyData()');
     this.franchises.push(new Franchise({
         franchise_pk: 1,
         name: "Kroger",

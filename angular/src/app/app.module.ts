@@ -1,5 +1,5 @@
 // Imports
-import { NgModule, isDevMode } from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
@@ -18,6 +18,7 @@ import { FooterComponent } from './footer.component';
 import { PageComponent } from './page.component';
 import { LogService } from './log.service';
 import { LoginService } from './login.service';
+import { PageService } from './page.service';
 import { NavItemService } from './nav-item.service';
 import { routing } from './app.routes';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -43,7 +44,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   	FooterComponent,
   	PageComponent
   ],
-  providers: [Logger, LogService, LoginService, NavItemService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [Logger, LogService, LoginService, PageService, NavItemService, HeaderComponent, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 
