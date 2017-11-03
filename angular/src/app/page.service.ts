@@ -12,17 +12,17 @@ import {LoginService} from "./login.service";
  */
 export class PageService {
 
-	log: LogService;
-	loginService: LoginService;
+  log: LogService;
+  loginService: LoginService;
 
   constructor(private _logger: LogService,
               private _loginService: LoginService) {
-		this.log = _logger;
+    this.log = _logger;
     this.loginService = _loginService;
     this.log.info('PageService.constructor()');
-	}
+  }
 
-	// Name
+  // Name
   pageNameValue: string = '[PageName]';
   private pageNameSubject = new Subject<any>();
   getPageName(): string {
@@ -52,6 +52,7 @@ export class PageService {
     return this.subTitleSubject.asObservable();
   }
 
+  // Change the page title and sub-title.
   attemptToChangePage(_pageName: string, _subTitle: string): boolean {
     this.log.info('PageService.attemptToChangePage() Updating page data.');
     this.setPageName(_pageName);

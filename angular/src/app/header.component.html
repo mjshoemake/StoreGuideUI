@@ -17,34 +17,41 @@
           <img class="app-icon" src="{{brandIcon.image}}" alt="{{brandIcon.displayText}}" style="width:32px;height:28px; vertical-align: middle;"/>
           <b class="brand__forename">{{brandForename}}</b>&nbsp;
           <b class="brand__surname hide-on-mobile">{{brandSurname}}</b>
-<!--          <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>  -->
+          <!--          <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>  -->
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="navbar-collapse collapse" id="div-navbar-collapsible">
-<!--
-          <div class="nav-dropdown-spacer">
-          </div>
-          <div class="nav-dropdown">
--->
-            <ul class="nav navbar-nav navbar-right">
-              <li *ngFor="let navitem of navItems" class="nav">
-                <ng-container *ngIf="navitem.id != 'googleBtn'; else elseBlock">
-                  <a class="{{navitem.classPrefix}}-{{displayNavItems}}" routerLink="{{navitem.href}}" routerLinkActive="active">
-                    <span class="glyphicon {{navitem.glyphicon}}"></span>
-                    &nbsp;&nbsp;{{navitem.displayText}}
-                  </a>
-                </ng-container>
-                <ng-template #elseBlock>
-                  <a class="{{displaySignOut}}" (click)="logout()">Sign out</a>
-                </ng-template>
-              </li>
-            </ul>
-            <div id="googleBtn" class="g-signin2 {{displaySignIn}}" data-onsuccess="onSignIn"></div>
-
-<!--
-          </div>
--->
+          <!--
+                    <div class="nav-dropdown-spacer">
+                    </div>
+                    <div class="nav-dropdown">
+          -->
+          <ul class="nav navbar-nav navbar-right">
+            <li *ngFor="let navitem of navItemService.observableList | async" class="nav">
+              <ng-container *ngIf="navitem.id != 'navLogout'; else elseBlock">
+                <a class="{{navitem.classPrefix}}-{{displayNavItems}}" routerLink="{{navitem.href}}" routerLinkActive="active">
+                  <span class="glyphicon {{navitem.glyphicon}}"></span>
+                  &nbsp;&nbsp;{{navitem.displayText}}
+                </a>
+              </ng-container>
+              <ng-template #elseBlock>
+                <a class="{{navitem.classPrefix}}-{{displayNavItems}}" (click)="logout()">
+                  <span class="glyphicon {{navitem.glyphicon}}"></span>
+                  &nbsp;&nbsp;Sign out
+                </a>
+              </ng-template>
+            </li>
+            <li class="nav">
+              <div id="googleBtn" class="g-signin2" data-onsuccess="onSignIn"></div>
+            </li>
+          </ul>
+          <!--
+                      <div id="googleBtn" class="g-signin2 {{displaySignIn}}" data-onsuccess="onSignIn"></div>
+          -->
+          <!--
+                    </div>
+          -->
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>

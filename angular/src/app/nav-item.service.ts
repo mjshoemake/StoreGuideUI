@@ -10,63 +10,87 @@ import {Observable} from "rxjs/Observable";
 // in memory only.
 export class NavItemService {
 
-	log: LogService;
+  log: LogService;
 
-	// Placeholder for items.
-	navItems: NavItem[] = [];
+  // The current list of nav items available to the current user.
+  navItems: NavItem[] = [];
   private _observableList: BehaviorSubject<NavItem[]> = new BehaviorSubject([]);
-  get observableList(): Observable<NavItem[]> { return this._observableList.asObservable() }
+  get observableList(): Observable<NavItem[]> {
+    this.log.info('NavItemService.observableList() get  NavItem list size=' + this.navItems.length);
+    return this._observableList.asObservable()
+  }
 
-	constructor(private _logger:LogService) {
-		this.log = _logger;
-		this.log.info('NavItemService.constructor()');
+  // A map of all available nav options, not all of which will be available to the
+  // current user.
+  navOptions : { [key:string]:NavItem; } = {};
 
-		// Populate nav items list
-	  this.navItems = [
-            new NavItem({
-              id: 'nav1',
-              href: '/home',
-              classPrefix: 'open',
-              glyphicon: 'glyphicon-home',
-              displayText: 'Home'
-            }),
-            new NavItem({
-              id: 'nav2',
-              href: '/stores',
-              classPrefix: 'protected',
-              glyphicon: 'glyphicon-shopping-cart',
-              displayText: 'Stores'
-            }),
-            new NavItem({
-              id: 'nav3',
-              href: '#',
-              classPrefix: 'protected',
-              glyphicon: 'glyphicon-search',
-              displayText: 'Search'
-            }),
-            new NavItem({
-              id: 'nav4',
-              href: '#',
-              classPrefix: 'protected',
-              glyphicon: 'glyphicon-wrench',
-              displayText: 'Preferences'
-            }),
-            new NavItem({
-              id: 'googleBtn',
-              href: '#',
-              classPrefix: 'googleAuth',
-              glyphicon: 'glyphicon-user',
-              displayText: 'Login'
-            })
-  	];
-	}
+  // Constructor
+  constructor(private _logger:LogService) {
+    this.log = _logger;
+    this.log.info('NavItemService.constructor()');
 
-	clear() {
+    // Populate nav items list
+    this.navOptions = {
+      home: new NavItem({
+        id: 'nav1',
+        href: '/home',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-home',
+        displayText: 'Home'
+      }),
+      stores: new NavItem({
+        id: 'nav2',
+        href: '/stores',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-shopping-cart',
+        displayText: 'Stores'
+      }),
+      search: new NavItem({
+        id: 'nav3',
+        href: '#',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-search',
+        displayText: 'Search'
+      }),
+      preferences: new NavItem({
+        id: 'nav4',
+        href: '#',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-wrench',
+        displayText: 'Preferences'
+      }),
+      logout: new NavItem({
+        id: 'navLogout',
+        href: '#',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-wrench',
+        displayText: 'Logout'
+      })
+    };
+  }
+
+  resetNavItems(_email: string) {
+    this.log.info('NavItemService.resetNavItems() -> ' + _email);
+    if (_email == "atlantatechie@gmail.com") {
+      // Mike is logged in. Allow access.
+      this.navItems = [];
+      this.navItems.push(this.navOptions.stores);
+      this.navItems.push(this.navOptions.home);
+      this.navItems.push(this.navOptions.logout);
+    } else {
+      this.navItems = [];
+      this.navItems.push(this.navOptions.home);
+    }
+    this.logNavItems();
+    this.refresh();
+  }
+
+  clear() {
     this.log.debug('NavItemService.clear()');
     this.navItems = [];
   }
 
-	add(item: NavItem) {
+  add(item: NavItem) {
     this.log.debug('NavItemService.add() - ' + item.displayText);
     this.navItems.push(item);
   }
@@ -76,9 +100,27 @@ export class NavItemService {
     this._observableList.next(this.navItems);
   }
 
-	getAll(): NavItem[] {
-		this.log.debug('NavItemService.getAll() count=' + this.navItems.length);
-		return this.navItems;
-	}
+  getAll(): NavItem[] {
+    this.log.debug('NavItemService.getAll() count=' + this.navItems.length);
+    return this.navItems;
+  }
+
+  logNavItems() {
+    this.log.info("NavItems:");
+    for (let i = 0; i < this.navItems.length; i++) {
+      let next: NavItem = this.navItems[i];
+      this.log.info("   [" + (i+1) + "]:");
+      if (next == undefined) {
+        this.log.info("      [undefined]");
+
+      } else {
+        this.log.info("      id: " + next.id);
+        this.log.info("      href: " + next.href);
+        this.log.info("      glyphicon: " + next.glyphicon);
+        this.log.info("      displayText: " + next.displayText);
+        this.log.info("      classPrefix: " + next.classPrefix);
+      }
+    }
+  }
 
 }
