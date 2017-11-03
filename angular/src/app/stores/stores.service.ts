@@ -21,11 +21,11 @@ export class StoresService {
   constructor(private _logger:LogService) {
 		this.log = _logger;
 		this.log.info('StoresService.constructor() BEGIN');
-		this.createDummyData();
 	}
 
-	createDummyData() {
-    this.log.info('StoresService.createDummyData()');
+	loadStoresList() {
+    this.log.info('StoresService.loadStoresList()');
+    this.franchises = [];
     this.franchises.push(new Franchise({
         franchise_pk: 1,
         name: "Kroger",
@@ -49,4 +49,15 @@ export class StoresService {
     this._observableList.next(this.franchises);
   }
 
+  logStoresList() {
+    this.log.info("Fraanchises:");
+    for (let i = 0; i < this.franchises.length; i++) {
+      let next: Franchise = this.franchises[i];
+      this.log.info("   [" + (i+1) + "]:");
+      this.log.info("      franchise_pk: " + next.franchise_pk);
+      this.log.info("      name: " + next.name);
+      this.log.info("      website: " + next.website);
+      this.log.info("      company_email: " + next.company_email);
+    }
+  }
 }

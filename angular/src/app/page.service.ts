@@ -52,6 +52,7 @@ export class PageService {
     return this.subTitleSubject.asObservable();
   }
 
+  // Change the page title and sub-title.
   attemptToChangePage(_pageName: string, _subTitle: string): boolean {
     this.log.info('PageService.attemptToChangePage() Updating page data.');
     this.setPageName(_pageName);

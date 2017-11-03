@@ -4,6 +4,7 @@ import { Login } from './login';
 import { Logger } from 'angular2-logger/app/core/logger';
 import { LogService } from './log.service';
 import { ChangeDetectorRef } from '@angular/core';
+import {NavItemService} from "./nav-item.service";
 
 
 // For Google Auth
@@ -20,6 +21,7 @@ declare const gapi: any;
 export class LoginService {
 
 	log: LogService;
+	navItemService: NavItemService;
 	private router: Router;
 
   loggedInUser: Login;
@@ -30,8 +32,9 @@ export class LoginService {
   //@Output() loggedInChange = new EventEmitter();
   @Output() loggedInChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private _logger:LogService, _router: Router) {
+  constructor(private _logger:LogService, _navItemService: NavItemService, _router: Router) {
 		this.log = _logger;
+		this.navItemService = _navItemService;
 		this.router = _router;
 
     mapComponents.headerComp = this;
@@ -205,6 +208,8 @@ export class LoginService {
 	  } else {
       this.loggedInUser = new Login({id: _id, name: _name, firstName: _firstName, lastName: _lastName, imageUrl: _imageUrl, email: _email});
       this.loggedIn = true;
+      this.log.info('LoginService.saveLoggedInUser() Resetting nav items (' + _email + ').');
+      this.navItemService.resetNavItems(_email);
       this.log.info('LoginService.saveLoggedInUser() User successfully logged in (' + _email + ').');
       this.log.info('LoginService.saveLoggedInUser() Routing to /stores.');
       this.router.navigate(['/stores']);

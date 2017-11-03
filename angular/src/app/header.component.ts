@@ -1,9 +1,10 @@
-import { Component, Injectable, Input } from '@angular/core';
+import {Component, Injectable, Input, ChangeDetectorRef, OnInit} from '@angular/core';
 import { LogService } from './log.service';
 import { BrandIcon } from './brand-icon';
 import { NavItem } from './nav-item';
 import { LoginService } from './login.service';
-//import { ChangeDetectorRef } from '@angular/core';
+import {NavItemService} from "./nav-item.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
 	selector: 'appHeader',
@@ -12,7 +13,7 @@ import { LoginService } from './login.service';
 })
 
 @Injectable()
-export class HeaderComponent {  // implements AfterViewInit {
+export class HeaderComponent implements OnInit {
 	@Input() brandIcon = new BrandIcon({
 			image: '',
 			displayText: ''
@@ -29,16 +30,22 @@ export class HeaderComponent {  // implements AfterViewInit {
 
   log: LogService;
   loginService: LoginService;
-//  changeDetector: ChangeDetectorRef;
+  navItemService: NavItemService;
+  //changeDetectorRef: ChangeDetectorRef;
   loggedInUserId: string;
 
+  private navItemsSubscription: Subscription;
 
   // For Google Auth
   //public auth2: any;
 
 //  constructor(private _logger: LogService, _loginService: LoginService, _changeDetector: ChangeDetectorRef) {
-	constructor(private _logger: LogService, _loginService: LoginService) {
+//	constructor(private _logger: LogService, _navItemService: NavItemService, _loginService: LoginService, _changeDetector: ChangeDetectorRef) {
+constructor(private _logger: LogService, _navItemService: NavItemService, _loginService: LoginService) {
 		this.log = _logger;
+		this.navItemService = _navItemService;
+		this.loginService = _loginService;
+		//this.changeDetectorRef = _changeDetector;
     this.log.info('HeaderComponent.constructor() BEGIN');
 
     try {
@@ -47,7 +54,6 @@ export class HeaderComponent {  // implements AfterViewInit {
       this.log.error('   ' +e.name + ': ' + e.message + ' - ' + e.stack);
     }
 
-		this.loginService = _loginService;
 		//this.changeDetector = _changeDetector;
 		//this.loginService.setHeaderChangeDetector(_changeDetector);
 
@@ -82,40 +88,52 @@ export class HeaderComponent {  // implements AfterViewInit {
     this.log.info('HeaderComponent.constructor() END');
 	}
 
+  ngOnInit() {
+    this.log.info('HeaderComponent.ngOnInit() Subscribing to navigation changes...')
+    this.navItemsSubscription = this.navItemService.observableList.subscribe( value => {
+      this.log.info('HeaderComponent NavItem observable event received... new value=' + value.length);
+      //this.changeDetectorRef.detectChanges();
+      this.log.info('HeaderComponent NavItem observable event received... detectChanges() called.');
+    });
+  }
+  // Data Binding From Service END
   isStillLoggedIn(): boolean {
 	  return this.loginService.isStillLoggedIn();
   }
 
-/*
   logout() {
     this.log.info("HeaderComponent.logout()");
+/*
     if (gapi) {
       this.log.info('HeaderComponent.logout() gapi set properly.')
       this.loginService.setGoogleApi(gapi);
     } else {
       this.log.info('HeaderComponent.logout() gapi is null.')
     }
-    this.loginService.logout();
-    this.showLogin();
-  }
-
-  hideLogin() {
-	  this.displayNavItems = 'display-inline';
-//	  this.displaySignIn = 'hidden';
-    this.displaySignIn = 'display-block';
-	  this.displaySignOut = 'display-block';
-    this.log.info("HeaderComponent.hideLogin()");
-//    this.changeDetector.detectChanges();
-  }
-
-  showLogin() {
-    this.displayNavItems = 'hidden';
-    this.displaySignIn = 'display-block';
-    this.displaySignOut = 'hidden';
-    this.log.info("HeaderComponent.showLogin()");
-//    this.changeDetector.detectChanges();
-  }
 */
+    this.loginService.logout();
+    this.navItemService.resetNavItems(null);
+//    this.showLogin();
+  }
+
+  /*
+    hideLogin() {
+        this.displayNavItems = 'display-inline';
+  //	  this.displaySignIn = 'hidden';
+      this.displaySignIn = 'display-block';
+        this.displaySignOut = 'display-block';
+      this.log.info("HeaderComponent.hideLogin()");
+  //    this.changeDetector.detectChanges();
+    }
+
+    showLogin() {
+      this.displayNavItems = 'hidden';
+      this.displaySignIn = 'display-block';
+      this.displaySignOut = 'hidden';
+      this.log.info("HeaderComponent.showLogin()");
+  //    this.changeDetector.detectChanges();
+    }
+  */
   closeHamburgerMenu() {
 	  let button = document.getElementById('hamburgerButton');
 	  let collapsible = document.getElementById('div-navbar-collapsible');
