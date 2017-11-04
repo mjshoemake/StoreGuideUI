@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { Injectable } from '@angular/core';
+import {ChangeDetectorRef, Component, Injectable, Input, OnInit, OnDestroy} from '@angular/core';
 import { LogService } from '../log.service';
 import { LoginService } from '../login.service';
 import { PageService } from '../page.service';
 import {StoresService } from './stores.service';
 import { PageComponent } from '../page.component';
+import {Subscription} from "rxjs/Subscription";
+import {Franchise} from "./franchise";
 
 @Component({
 	selector: 'stores',
@@ -13,11 +14,16 @@ import { PageComponent } from '../page.component';
 })
 
 @Injectable()
-export class StoresComponent  {
+export class StoresComponent implements OnDestroy, OnInit {
 	log: LogService;
   loginService: LoginService;
   pageService: PageService;
   storesService: StoresService;
+  changeDetectorRef: ChangeDetectorRef;
+  franchises: Franchise[] = [];
+
+  // Data Binding From Service
+  private myStoresSubscription: Subscription;
 
 /*
 	interval: number = 60;
@@ -37,15 +43,20 @@ export class StoresComponent  {
 */
 
 	constructor(private _logger: LogService,
+              private _ref: ChangeDetectorRef,
 	            private _storesService: StoresService,
               private _loginService: LoginService,
               private _pageService: PageService,
               private _pageComp: PageComponent) {
 		this.log = _logger;
-		this.log.info('StoresService.constructor() BEGIN');
+    this.log.info('StoresComponent.constructor() BEGIN');
 		this.storesService = _storesService;
     this.loginService = _loginService;
     this.pageService = _pageService;
+    this.changeDetectorRef = _ref;
+    if (this.changeDetectorRef == undefined) {
+      this.log.info("StoreComponent.constructor()  ChangeDetectorRef == null!!!");
+    }
     if (this.pageService.attemptToChangePage('Stores', 'Select a store and start mapping your way to a better shopping experience! Let us know what you\'re looking for and we\'ll help you find it quickly and efficiently.')) {
       // Set up page data.
       this.log.info("StoreComponent.constructor()  Closing hamburger menu...");
@@ -56,7 +67,46 @@ export class StoresComponent  {
       //_pageComp.clearAndAddBreadcrumb('/stores', 'My Stores')
       _pageComp.clearAndAddBreadcrumb('/mapmyshop/#/stores', 'My Stores');
 //      _pageComp.refresh();
+      this.init();
     }
 	}
+
+  ngOnInit() {
+    this.log.info('StoresComponent.ngOnInit() called.');
+  }
+
+  ngOnDestroy() {
+    this.log.info('StoresComponent.ngOnDestroy() called.');
+  }
+
+  @Input('franchiseList')
+  get franchiseList(): Franchise[] {
+    this.log.info('StoresComponent.franchiseList() get value=' + this.franchises.length);
+    return this.franchises;
+  }
+
+  init() {
+    this.log.info('StoresComponent.init() Subscribing to value changes...');
+    this.storesService.loadStoresList();
+    //this.changeDetectorRef.detectChanges();
+    this.myStoresSubscription = this.storesService.observableList.subscribe( value => {
+      this.log.info('StoresComponent StoresList observable event received... new value=' + value.length);
+      this.franchises = value;
+      this.storesService.logStoresList();
+      this.log.info('StoresComponent StoreesList observable event received... Calling detectChanges()...');
+      if (this.changeDetectorRef == undefined || this.changeDetectorRef == null) {
+        this.log.info("StoreComponent.constructor()  ChangeDetectorRef == null!!!");
+      } else {
+        this.log.info("StoreComponent.constructor()  ChangeDetectorRef == " + this.changeDetectorRef);
+      }
+      this.changeDetectorRef.detectChanges();
+      this.log.info('StoresComponent StoreesList observable event received... Calling detectChanges()... Done.');
+    });
+  }
+  // Data Binding From Service END
+
+  refresh() {
+    this.changeDetectorRef.detectChanges();
+  }
 
 }
