@@ -16,7 +16,7 @@ import {Franchise} from "./franchise";
 
 @Injectable()
 export class StoresComponent implements OnDestroy, OnInit {
-	log: LogService;
+  log: LogService;
   loginService: LoginService;
   pageService: PageService;
   storesService: StoresService;
@@ -25,7 +25,7 @@ export class StoresComponent implements OnDestroy, OnInit {
 
   // Data Binding From Service
   private myStoresSubscription: Subscription;
-  testValue: string = "This is just a test.";
+  testValue: string = "Initial value.";
 
 /*
 	interval: number = 60;
@@ -56,25 +56,27 @@ export class StoresComponent implements OnDestroy, OnInit {
     this.loginService = _loginService;
     this.pageService = _pageService;
     this.changeDetectorRef = _ref;
-    if (this.changeDetectorRef == undefined) {
-      this.log.info("StoreComponent.constructor()  ChangeDetectorRef == null!!!");
+    if (! this.changeDetectorRef) {
+      this.log.info("StoresComponent.constructor()  ChangeDetectorRef == null!!!");
     }
     if (this.pageService.attemptToChangePage('Stores', 'Select a store and start mapping your way to a better shopping experience! Let us know what you\'re looking for and we\'ll help you find it quickly and efficiently.')) {
       // Set up page data.
-      this.log.info("StoreComponent.constructor()  Closing hamburger menu...");
+      this.log.info("StoresComponent.constructor()  Closing hamburger menu...");
       _pageComp.closeHamburgerMenu();
-      this.log.info("StoreComponent.constructor()  Closing hamburger menu... Done.");
+      this.log.info("StoresComponent.constructor()  Closing hamburger menu... Done.");
 
-      this.log.info("StoreComponent.constructor()  About to call clearAndAddBreadcrumb()...");
+      this.log.info("StoresComponent.constructor()  About to call clearAndAddBreadcrumb()...");
       //_pageComp.clearAndAddBreadcrumb('/stores', 'My Stores')
       _pageComp.clearAndAddBreadcrumb('/mapmyshop/#/stores', 'My Stores');
 //      _pageComp.refresh();
-      this.init();
     }
+    this.log.info('StoresComponent.constructor()  END');
 	}
 
-	ngOnInit() {
-    this.log.info('StoresComponent.ngOnInit() called.');
+  ngOnInit() {
+	  console.log('StoresComponent.ngOnInit() called.');
+    //this.log.info('StoresComponent.ngOnInit() called.');
+    this.init();
   }
 
   ngOnDestroy() {
@@ -88,8 +90,11 @@ export class StoresComponent implements OnDestroy, OnInit {
   }
 
   init() {
+	  this.testValue = 'Initialized.';
+	  console.log('StoresComponent.init() called. Writing to this.log.info()....')
     this.log.info('StoresComponent.init() Subscribing to value changes...');
     this.storesService.loadStoresList();
+
     //this.changeDetectorRef.detectChanges();
     this.myStoresSubscription = this.storesService.observableList.subscribe( value => {
       this.log.info('StoresComponent StoresList observable event received... new value=' + value.length);

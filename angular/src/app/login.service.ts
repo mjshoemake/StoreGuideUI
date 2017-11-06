@@ -1,4 +1,4 @@
-import { Injectable, Input, Output, EventEmitter } from '@angular/core';
+import { Injectable, Input, Output, NgZone, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Login } from './login';
 import { Logger } from 'angular2-logger/app/core/logger';
@@ -23,6 +23,7 @@ export class LoginService {
 	log: LogService;
 	navItemService: NavItemService;
 	private router: Router;
+	private zone: NgZone;
 
   loggedInUser: Login;
   loggedInValue: boolean = false;
@@ -32,10 +33,14 @@ export class LoginService {
   //@Output() loggedInChange = new EventEmitter();
   @Output() loggedInChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(private _logger:LogService, _navItemService: NavItemService, _router: Router) {
+  constructor(private _logger: LogService,
+              _navItemService: NavItemService,
+              private _zone: NgZone,
+              _router: Router) {
 		this.log = _logger;
 		this.navItemService = _navItemService;
-		this.router = _router;
+		this.router = _router
+    this.zone = _zone;
 
     mapComponents.headerComp = this;
 
@@ -161,7 +166,7 @@ export class LoginService {
           this.log.info('LoginService.logout() Router is null.')
         }
         this.log.info('LoginService.logout() Routing to /home...')
-        this.router.navigate(['/home']);
+        this.gotoPage('/home');
         this.log.info('LoginService.logout() Routing to /home... DONE.')
         this.loggedIn = false;
         this.loggedInUser = undefined;
@@ -200,6 +205,10 @@ export class LoginService {
     }
   }
 
+  gotoPage(pageName: string) {
+	  this.zone.run(() => this.router.navigate([pageName]));
+  }
+
   saveLoggedInUser(_id: string, _name: string, _firstName: string, _lastName: string, _imageUrl: string, _email: string) {
     if (_email == null) {
       this.loggedInUser = undefined;
@@ -212,7 +221,7 @@ export class LoginService {
       this.navItemService.resetNavItems(_email);
       this.log.info('LoginService.saveLoggedInUser() User successfully logged in (' + _email + ').');
       this.log.info('LoginService.saveLoggedInUser() Routing to /stores.');
-      this.router.navigate(['/stores']);
+      this.gotoPage('/stores');
     }
   }
 
