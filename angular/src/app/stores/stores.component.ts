@@ -81,7 +81,7 @@ export class StoresComponent implements OnDestroy, OnInit {
 
   ngOnDestroy() {
     this.log.info('StoresComponent.ngOnDestroy() called.');
-  }
+ 	}
 
   @Input('franchiseList')
   get franchiseList(): Franchise[] {
@@ -106,13 +106,13 @@ export class StoresComponent implements OnDestroy, OnInit {
       } else {
         this.log.info("StoreComponent.constructor()  ChangeDetectorRef == " + this.changeDetectorRef);
       }
-      this.changeDetectorRef.detectChanges();
+      //this.changeDetectorRef.detectChanges();
       this.log.info('StoresComponent StoreesList observable event received... Calling detectChanges()... Done.');
     });
   }
   // Data Binding From Service END
 
   refresh() {
-    this.changeDetectorRef.detectChanges();
+    //this.changeDetectorRef.detectChanges();
   }
 }
