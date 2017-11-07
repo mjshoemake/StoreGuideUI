@@ -1,14 +1,5 @@
-<!-- 2 groups: "Former Managers" and "Former Employees" -->
-
 <titledPanel title="My Stores">
-<!--
-<collapsiblePanel title="My Stores" id="mystores" collapseClass="collapse in">
--->
   <p>This is your list of stores.  You can add a store by clicking the plus sign.  To select a store, click the store image.</p>
-<!--  <p>{{franchiseList.length}}</p>  -->
-<!--  <p>{{franchises.length}}</p>  -->
-  <p>{{testValue}}</p>
-
   <table width="100%">
     <tr>
 <!--      <th width="40px"><input type="checkbox"/></th>  -->
@@ -16,19 +7,11 @@
       <th>Website</th>
       <th>Company Email</th>
     </tr>
-<!--
-    <tr  *ngFor="let franchise of franchises">
-    <tr  *ngFor="let franchise of franchiseList">
-    <tr>
--->
-<!--      <td><input type="checkbox"/></td>  -->
     <tr  *ngFor="let franchise of storesService.observableList | async">
+      <!--      <td><input type="checkbox"/></td>  -->
       <td><a [routerLink]="['/view-store', franchise.franchise_pk]">{{franchise.name}}</a></td>
       <td><a href="{{franchise.website}}">{{franchise.website}}</a></td>
       <td>({{franchise.company_email}}</td>
     </tr>
   </table>
-<!--
-</collapsiblePanel>
--->
 </titledPanel>

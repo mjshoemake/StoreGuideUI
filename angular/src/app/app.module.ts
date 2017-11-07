@@ -22,6 +22,7 @@ import { PageService } from './page.service';
 import { NavItemService } from './nav-item.service';
 import { routing } from './app.routes';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {UsersModule} from "./users/users.module";
 
 // Decorator
 @NgModule({
@@ -31,6 +32,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpModule,
     JsonpModule,
     StoresModule,
+    UsersModule,
     HomeModule,
     SharedModule,
     routing,

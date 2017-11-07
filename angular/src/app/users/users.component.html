@@ -1,0 +1,15 @@
+<titledPanel title="Users">
+  <p>This is the list of users.  You can add a user by clicking the plus sign.  To select a user, click the user's login ID.</p>
+  <table width="100%">
+    <tr>
+<!--      <th width="40px"><input type="checkbox"/></th>  -->
+      <th>Username</th>
+      <th>Name</th>
+    </tr>
+    <tr  *ngFor="let user of usersService.observableList | async">
+      <!--      <td><input type="checkbox"/></td>  -->
+      <td><a [routerLink]="['/edit-user', user.username]">{{user.username}}</a></td>
+      <td>({{user.first_name}} {{user.last_name}}</td>
+    </tr>
+  </table>
+</titledPanel>

@@ -38,6 +38,13 @@ export class NavItemService {
         glyphicon: 'glyphicon-home',
         displayText: 'Home'
       }),
+      users: new NavItem({
+        id: 'nav2',
+        href: '/users',
+        classPrefix: 'open',
+        glyphicon: 'glyphicon-user',
+        displayText: 'Users'
+      }),
       stores: new NavItem({
         id: 'nav2',
         href: '/stores',
@@ -75,6 +82,7 @@ export class NavItemService {
       // Mike is logged in. Allow access.
       this.navItems = [];
       this.navItems.push(this.navOptions.stores);
+      this.navItems.push(this.navOptions.users);
       this.navItems.push(this.navOptions.home);
       this.navItems.push(this.navOptions.logout);
     } else {
