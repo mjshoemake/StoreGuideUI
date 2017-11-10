@@ -1,6 +1,22 @@
 <div class="panel panel-primary section width-fill">
   <div class="panel-heading">
     {{title}}
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    {{addEnabled}}
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <div *ngIf="addEnabled; then showEnabled"></div>
+    <ng-template #showEnabled>
+<!--
+    <a (click)="addButtonClicked()"><img src="assets/images/icon-plus.png" alt="Add Store" alt-text="Add Store" height="20" width="20"/></a>
+    <a [ngbPopover]="addContent"><img src="assets/images/icon-plus.png" alt="Add Store" alt-text="Add Store" height="20" width="20"/></a>
+      <button type="button" class="btn btn-outline-secondary" [ngbPopover]="addContent" popoverTitle="Fancy content">
+        I've got markup and bindings in my popover!
+      </button>
+-->
+      <button type="button" class="btn btn-outline-secondary" placement="right" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right">
+        Popover on right
+      </button>
+    </ng-template>
   </div>
   <div class="panel-body">
     <ng-content></ng-content>

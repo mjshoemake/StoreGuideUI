@@ -5,9 +5,12 @@ import { BrowserModule }  from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpModule, JsonpModule } from '@angular/http';
 import { StoresModule } from './stores/stores.module';
+import { UsersModule } from "./users/users.module";
 import { HomeModule } from './home/home.module';
 import { SharedModule } from './shared/shared.module';
 import {Logger, Options as LoggerOptions} from 'angular2-logger/app/core/logger';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { routing } from './app.routes';
 import { environment } from '../environments/environment';
 
 // Declarations
@@ -20,9 +23,6 @@ import { LogService } from './log.service';
 import { LoginService } from './login.service';
 import { PageService } from './page.service';
 import { NavItemService } from './nav-item.service';
-import { routing } from './app.routes';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {UsersModule} from "./users/users.module";
 
 // Decorator
 @NgModule({

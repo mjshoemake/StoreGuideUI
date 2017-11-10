@@ -62,6 +62,11 @@ export class UsersComponent implements OnDestroy, OnInit {
     return this.users;
   }
 
+  addButtonClicked() {
+    this.log.info('UsersComponent.addButtonClicked() BEGIN');
+	  alert("Add Button Clicked.");
+  }
+
   init() {
 	  console.log('UsersComponent.init() called. Loading users list...');
     this.usersService.loadUsersList();
