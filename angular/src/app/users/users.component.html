@@ -1,54 +1,29 @@
 <ng-template #addContent>
-  <label for="username">Username:</label>
-  <input type="text" id="username">
-  <label for="username">First Name:</label>
-  <input type="text" id="first_name">
-  <label for="username">Username:</label>
-  <input type="text" id="last_name">
-  &nbsp;
-  <br/>
-  <a href="#" class="btn btn-large btn-primary">Save</a>&nbsp;
-  <a href="#" class="btn btn-large btn-primary">Cancel</a>
+  <div class="popover-section">
+    <p>
+      Please enter the properties of the user you would like to add and click the "Save" button.
+    </p>
+    <label for="username">Username:</label><br/>
+    <input type="text" id="username"><br/>
+    <label for="username">First Name:</label><br/>
+    <input type="text" id="first_name"><br/>
+    <label for="username">Last Namee:</label><br/>
+    <input type="text" id="last_name"><br/>
+    &nbsp;<br/>
+    <div class="center-div" style="width: 133px;">
+      <a href="#" class="btn btn-large btn-primary">Save</a>&nbsp;
+      <a href="#" class="btn btn-large btn-primary">Cancel</a>
+    </div>
+  </div>
 </ng-template>
 <titledPanel title="Users" addEnabled=true (addClicked)="addButtonClicked()">
   <p>
     This is the list of users.  You can add a user by clicking the plus sign.  To select a user, click the user's login ID.
   </p>
-  <button type="button" class="btn btn-outline-secondary" placement="right" ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on right">
-    Popover on right
+  <button type="button" class="btn btn-outline-secondary" placement="right" [ngbPopover]="addContent" popoverTitle="Add User">
+    Add
   </button>
-
-  <ngb-accordion [closeOthers]="true" activeIds="pnl1" class="subsection">
-    <ngb-panel id="pnl11" title="">
-      <ng-template ngbPanelTitle>Section 1</ng-template>
-      <ng-template ngbPanelContent>
-        One<br/>One<br/>One<br/>
-      </ng-template>
-    </ngb-panel>
-    <ngb-panel id="pnl12" title="">
-      <ng-template ngbPanelTitle>Section 2</ng-template>
-      <ng-template ngbPanelContent>
-        Two<br/>Two<br/>Two<br/>
-      </ng-template>
-    </ngb-panel>
-    <ngb-panel id="pnl13" title="">
-      <ng-template ngbPanelTitle>Section 3</ng-template>
-      <ng-template ngbPanelContent>
-        Three<br/>Three<br/>Three<br/>
-      </ng-template>
-    </ngb-panel>
-  </ngb-accordion>
-
-  <button type="button" class="btn btn-outline-secondary" placement="bottom"
-          ngbPopover="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." popoverTitle="Popover on bottom">
-    Popover on bottom
-  </button>
-
-  <ng-template #popContent>Hello, <b>{{name}}</b>!</ng-template>
-  <button type="button" class="btn btn-outline-secondary" [ngbPopover]="popContent" popoverTitle="Fancy content">
-    I've got markup and bindings in my popover!
-  </button>
-
+  <br/>
   <table width="100%">
     <tr>
 <!--      <th width="40px"><input type="checkbox"/></th>  -->

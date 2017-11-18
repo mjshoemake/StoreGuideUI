@@ -28,6 +28,10 @@
 @top-btn-bg-color: @color-primary-0;
 @top-btn-bg-hover-color: @color-primary-0;
 @top-btn-font-color: @color-secondary-5;
+@popover-title-bg-color: @color-primary-0;
+@popover-font-color: @color-secondary-4;
+@popover-bg-color: #f9f5d8;
+@btn-primary-bg-color: @color-primary-1;
 
 
 // Pallette #2
@@ -71,6 +75,8 @@
 @color-secondary-3: #dddddd;
 @color-secondary-4: #eeeeee;
 @color-secondary-5: #403075;  // was white
+@color-secondary-5b: #514186;
+@color-secondary-5c: #625297;
 @color-secondary-6: #d66315;  // orange    (ff8430, e06410, )
 @color-secondary-7: white;
 
@@ -80,6 +86,10 @@
 @top-btn-bg-color: @color-primary-6;
 @top-btn-bg-hover-color: @color-primary-6;
 @top-btn-font-color: @color-secondary-7;
+@popover-title-bg-color: @color-primary-6;
+@popover-title-font-color: @color-secondary-4;
+@popover-bg-color: #f9f5d8;
+@btn-primary-bg-color: @color-secondary-5b;
 
 
 
@@ -536,6 +546,40 @@ div.navbar-collapse > ul.nav.navbar-right {
 /*  */
 
 // Panels & Divs
+div.popover-body {
+	background: @popover-bg-color;
+}
+
+h3.popover-header {
+	background-color: @popover-title-bg-color;
+	color: @popover-title-font-color;
+}
+
+.popover-section, div.popover-section {
+	margin: 15px 20px 15px 20px;
+	font-size: small;
+	max-width: 300px;
+}
+
+a.btn-primary {
+	background-color: @btn-primary-bg-color;
+	padding: 5px 10px;
+	margin: 20px 0 0 0;
+	color: @popover-title-font-color;
+}
+
+button.btn {
+	background-color: @btn-primary-bg-color;
+	padding: 5px 10px;
+	margin: 0 0 20px 0;
+	color: @popover-title-font-color;
+}
+
+.popover.bs-popover-auto[x-placement^=right],
+.popover.bs-popover-right {
+	max-width: unset;
+}
+
 div.panel.section {
 	border: none;
 	border-radius: 0px;
@@ -631,6 +675,10 @@ div.panel > div.panel-heading > a {
 div.center {
 	margin: 0 auto;
 	margin-top: 30px;
+}
+
+div.center-div {
+	margin: 0 auto;
 }
 
 div.panel-primary > div.panel-heading {
