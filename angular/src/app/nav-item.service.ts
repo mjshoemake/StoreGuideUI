@@ -16,7 +16,6 @@ export class NavItemService {
   navItems: NavItem[] = [];
   private _observableList: BehaviorSubject<NavItem[]> = new BehaviorSubject([]);
   get observableList(): Observable<NavItem[]> {
-    this.log.info('NavItemService.observableList() get  NavItem list size=' + this.navItems.length);
     return this._observableList.asObservable()
   }
 

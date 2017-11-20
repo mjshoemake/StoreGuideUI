@@ -561,7 +561,8 @@ h3.popover-header {
 	max-width: 300px;
 }
 
-a.btn-primary {
+a.btn-primary,
+a.btn-primary:not([href]):not([tabindex]){
 	background-color: @btn-primary-bg-color;
 	padding: 5px 10px;
 	margin: 20px 0 0 0;
@@ -684,6 +685,11 @@ div.center-div {
 div.panel-primary > div.panel-heading {
 	border-color: white;
 	color: black;
+}
+
+label {
+	margin-top: 7px;
+	margin-bottom: 2px;
 }
 
 div.panel-primary > div.panel-heading + .panel-collapse .panel-body {
@@ -819,13 +825,15 @@ input.data:focus {
     box-shadow: 0 0 10px #719ECE;
 }
 
-input:required {
-	background-color: rgba(255,0,0,0.10);
+// Required, Invalid input alerts
+.ng-valid[required], .ng-valid.required  {
+	border-left: 5px solid #42A948; /* green */
 }
 
-input.data:required {
-	background-color: rgb(255,0,0,0.10);
+.ng-invalid:not(form)  {
+	border-left: 5px solid #a94442; /* red */
 }
+// Required, Invalid input alerts  END
 
 a.top-btn {
 	margin: 20px 40px 20px 40px;

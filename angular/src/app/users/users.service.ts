@@ -14,7 +14,6 @@ export class UsersService {
   users: User[] = [];
   private _observableList: BehaviorSubject<User[]> = new BehaviorSubject([]);
   get observableList(): Observable<User[]> {
-    this.log.info('UsersService.observableList() get  User list size=' + this.users.length);
     return this._observableList.asObservable()
   }
 
@@ -37,6 +36,44 @@ export class UsersService {
         first_name: "Michelle",
         last_name: "Shoemake"}));
     this._observableList.next(this.users);
+  }
+
+  addUser(_user: User) {
+    this.users.push(_user);
+    this.sortList();
+    this.log.info("Added user " + _user.username + ".");
+    this.logUsersList();
+  }
+
+  sortList() {
+    this.users.sort(this.sortBy("username", false, undefined));
+    this.log.info("Sorted user list.");
+    this.logUsersList();
+  }
+
+  sortBy(field: string, reverse: boolean, primer) {
+
+    var key = primer ?
+      function(x) {return primer(x[field])} :
+      function(x) {return x[field]};
+
+    let nReverse: number = !reverse ? 1 : -1;
+
+    return function (a, b) {
+      let result: number = 0;
+      let valueA = key(a);
+      let valueB = key(b);
+      if (valueA > valueB) {
+        result = 1;
+      } else if (valueA < valueB) {
+        result = -1;
+      } else {
+        result = 0;
+      }
+      console.log("   Sorting... " + valueA + ", " + valueB + "  result=" + result);
+
+      return a = valueA, b = valueB, nReverse * result;
+    }
   }
 
   logUsersList() {

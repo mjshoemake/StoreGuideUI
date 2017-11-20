@@ -21,6 +21,7 @@ export class UsersComponent implements OnDestroy, OnInit {
   pageService: PageService;
   usersService: UsersService;
   users: User[] = [];
+  model: User = new User();
 
   // Data Binding From Service
   private usersSubscription: Subscription;
@@ -55,6 +56,15 @@ export class UsersComponent implements OnDestroy, OnInit {
   ngOnDestroy() {
     this.log.info('UsersComponent.ngOnDestroy() called.');
  	}
+
+ 	addSaveClicked() {
+    this.usersService.addUser(this.model);
+    this.clearModel();
+  }
+
+  clearModel() {
+	  this.model = new User();
+  }
 
   @Input('userList')
   get userList(): User[] {
