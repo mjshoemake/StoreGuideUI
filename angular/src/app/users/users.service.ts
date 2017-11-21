@@ -38,6 +38,26 @@ export class UsersService {
     this._observableList.next(this.users);
   }
 
+  getUserByPK(_user_pk: number): User {
+    for (let i = 0; i < this.users.length; i++) {
+      let next: User = this.users[i];
+      if (next.user_pk == _user_pk) {
+        return next;
+      }
+    }
+    throw new Error('Unable to find a user with the specified ID.');
+  }
+
+  getUser(_username: string): User {
+    for (let i = 0; i < this.users.length; i++) {
+      let next: User = this.users[i];
+      if (next.username == _username) {
+        return next;
+      }
+    }
+    throw new Error('Unable to find a user with the specified username (' + _username + ').');
+  }
+
   addUser(_user: User) {
     this.users.push(_user);
     this.sortList();

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { Injectable } from '@angular/core';
 import { LogService } from '../log.service';
 import { LoginService } from '../login.service';
@@ -7,6 +7,7 @@ import { UsersService } from './users.service';
 import { PageComponent } from '../page.component';
 import { Subscription } from "rxjs/Subscription";
 import { User } from "./user";
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
 	selector: 'users',
@@ -22,6 +23,9 @@ export class UsersComponent implements OnDestroy, OnInit {
   usersService: UsersService;
   users: User[] = [];
   model: User = new User();
+
+  @ViewChild('p') public addPopover: NgbPopover;
+  @ViewChild('e') public editPopover: NgbPopover;
 
   // Data Binding From Service
   private usersSubscription: Subscription;
@@ -57,7 +61,36 @@ export class UsersComponent implements OnDestroy, OnInit {
     this.log.info('UsersComponent.ngOnDestroy() called.');
  	}
 
- 	addSaveClicked() {
+  prepareToAdd() {
+    this.model = new User();
+    if (this.addPopover) {
+      this.addPopover.open();
+      this.log.info("Opening Add popover.");
+    }
+    if (this.editPopover) {
+      this.editPopover.close();
+      this.log.info("Closing Edit popover.");
+    }
+  }
+
+  prepareToEdit(_username: string) {
+	  let user = this.usersService.getUser(_username);
+    this.model.username = _username;
+	  this.model.user_pk = user.user_pk;
+	  this.model.first_name = user.first_name;
+	  this.model.last_name = user.last_name;
+	  this.model.image_url = user.image_url;
+	  if (this.addPopover) {
+	    this.addPopover.close();
+	    this.log.info("Closing Add popover.");
+    }
+    if (this.editPopover) {
+	    this.editPopover.open();
+	    this.log.info("Opening Edit popover.");
+    }
+  }
+
+  addSaveClicked() {
     this.usersService.addUser(this.model);
     this.clearModel();
   }
