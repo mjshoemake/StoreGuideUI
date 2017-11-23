@@ -9,7 +9,7 @@
         <img class="app-icon" src="{{brandIcon.image}}" alt="{{brandIcon.displayText}}" style="width:32px;height:28px; vertical-align: middle;"/>
         <b class="brand__forename">{{brandForename}}</b>&nbsp;
         <b class="brand__surname hide-on-mobile">{{brandSurname}}</b>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#containerNavbarCenter" aria-controls="containerNavbarCenter" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" id="hamburgerButton" type="button" data-toggle="collapse" data-target="#containerNavbarCenter" aria-controls="containerNavbarCenter" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -17,13 +17,13 @@
           <li *ngFor="let navitem of navItemService.observableList | async" class="nav-item">
             <ng-container *ngIf="navitem.id != 'navLogout'; else elseBlock">
               <a class="{{navitem.classPrefix}}-{{displayNavItems}}" routerLink="{{navitem.href}}" routerLinkActive="active">
-                <span class="glyphicon {{navitem.glyphicon}}"></span>
+                <span class="fa {{navitem.glyphicon}}"></span>
                 &nbsp;&nbsp;{{navitem.displayText}}
               </a>
             </ng-container>
             <ng-template #elseBlock>
               <a class="{{navitem.classPrefix}}-{{displayNavItems}}" (click)="logout()">
-                <span class="glyphicon {{navitem.glyphicon}}"></span>
+                <span class="fa {{navitem.glyphicon}}"></span>
                 &nbsp;&nbsp;Sign out
               </a>
             </ng-template>
@@ -38,13 +38,13 @@
           <li *ngFor="let navitem of navItemService.observableList | async" class="nav-item">
             <ng-container *ngIf="navitem.id != 'navLogout'; else elseBlock">
               <a class="{{navitem.classPrefix}}-{{displayNavItems}}" routerLink="{{navitem.href}}" routerLinkActive="active">
-                <span class="glyphicon {{navitem.glyphicon}}"></span>
+                <span class="fa {{navitem.glyphicon}}"></span>
                 &nbsp;&nbsp;{{navitem.displayText}}
               </a>
             </ng-container>
             <ng-template #elseBlock>
               <a class="{{navitem.classPrefix}}-{{displayNavItems}}" (click)="logout()">
-                <span class="glyphicon {{navitem.glyphicon}}"></span>
+                <span class="fa {{navitem.glyphicon}}"></span>
                 &nbsp;&nbsp;Sign out
               </a>
             </ng-template>

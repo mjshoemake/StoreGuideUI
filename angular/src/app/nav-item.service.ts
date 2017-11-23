@@ -34,42 +34,42 @@ export class NavItemService {
         id: 'nav1',
         href: '/home',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-home',
+        glyphicon: 'fa-home',
         displayText: 'Home'
       }),
       users: new NavItem({
         id: 'nav2',
         href: '/users',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-user',
+        glyphicon: 'fa-user',
         displayText: 'Users'
       }),
       stores: new NavItem({
         id: 'nav2',
         href: '/stores',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-shopping-cart',
+        glyphicon: 'fa-shopping-cart',
         displayText: 'Stores'
       }),
       search: new NavItem({
         id: 'nav3',
         href: '#',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-search',
+        glyphicon: 'fa-search',
         displayText: 'Search'
       }),
       preferences: new NavItem({
         id: 'nav4',
         href: '#',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-wrench',
+        glyphicon: 'fa-wrench',
         displayText: 'Preferences'
       }),
       logout: new NavItem({
         id: 'navLogout',
         href: '#',
         classPrefix: 'open',
-        glyphicon: 'glyphicon-wrench',
+        glyphicon: 'fa-wrench',
         displayText: 'Logout'
       })
     };

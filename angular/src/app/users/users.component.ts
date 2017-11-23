@@ -21,6 +21,7 @@ export class UsersComponent implements OnDestroy, OnInit {
   loginService: LoginService;
   pageService: PageService;
   usersService: UsersService;
+  pageComp: PageComponent;
   users: User[] = [];
   model: User = new User();
   popoverInstructions: string;
@@ -43,6 +44,7 @@ export class UsersComponent implements OnDestroy, OnInit {
 		this.usersService = _usersService;
     this.loginService = _loginService;
     this.pageService = _pageService;
+    this.pageComp = _pageComp;
     if (this.pageService.attemptToChangePage('Users', 'Manage your list of users (add, edit, remove, etc.).')) {
       // Set up page data.
       _pageComp.closeHamburgerMenu();
@@ -70,6 +72,7 @@ export class UsersComponent implements OnDestroy, OnInit {
       this.editing = false;
       this.popoverInstructions = "Add User: Please enter the properties of the user you would like to add and click the \"Save\" button.";
       this.popover.open();
+      this.pageComp.clearAlert();
     }
   }
 
@@ -85,6 +88,7 @@ export class UsersComponent implements OnDestroy, OnInit {
       this.popoverInstructions = "Edit User: Please update the selected user's properties and click the \"Save\" button.";
       this.editing = true;
       this.popover.open();
+      this.pageComp.clearAlert();
     }
   }
 
@@ -96,17 +100,28 @@ export class UsersComponent implements OnDestroy, OnInit {
     }
   }
 
+  deleteClicked() {
+    this.usersService.deleteUser(this.model);
+    this.clearModel();
+    this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was deleted successfully.");
+    this.popover.close();
+  }
+
   private addSaveClicked() {
     this.usersService.addUser(this.model);
     this.clearModel();
+    this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was added successfully.");
   }
 
   private editSaveClicked() {
-	  alert("Saving user " + this.model.username + " (ID=" + this.model.user_pk + ").");
+	  this.usersService.updateUser(this.model);
+    this.clearModel();
+    this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was updated successfully.");
   }
 
   clearModel() {
 	  this.model = new User();
+    this.pageComp.clearAlert();
   }
 
   @Input('userList')

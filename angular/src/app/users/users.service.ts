@@ -10,8 +10,10 @@ export class UsersService {
 
 	log: LogService;
 
-  // List of franchises
+  // List of users
   users: User[] = [];
+  nextID: number = 1001;
+
   private _observableList: BehaviorSubject<User[]> = new BehaviorSubject([]);
   get observableList(): Observable<User[]> {
     return this._observableList.asObservable()
@@ -59,10 +61,36 @@ export class UsersService {
   }
 
   addUser(_user: User) {
+    _user.user_pk = this.nextID++;
     this.users.push(_user);
     this.sortList();
     this.log.info("Added user " + _user.username + ".");
     this.logUsersList();
+  }
+
+  updateUser(_user: User) {
+    for (let i = 0; i < this.users.length; i++) {
+      let next: User = this.users[i];
+      if (next.user_pk == _user.user_pk) {
+        next.username = _user.username;
+        next.last_name = _user.last_name;
+        next.first_name = _user.first_name;
+        next.image_url = _user.image_url;
+        return;
+      }
+    }
+    throw new Error('Unable to find a user with matching primary key.');
+  }
+
+  deleteUser(_user: User) {
+    for (let i = 0; i < this.users.length; i++) {
+      let next: User = this.users[i];
+      if (next.user_pk == _user.user_pk) {
+        this.users.splice(i, 1);
+        return;
+      }
+    }
+    throw new Error('Unable to find a user with matching primary key.');
   }
 
   sortList() {

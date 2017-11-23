@@ -512,7 +512,7 @@ nav.navbar-default button.navbar-toggle span.icon-bar {
 
 li.nav,
 li.nav-item {
-	font-size: 13px;
+	font-size: 14px;
 	margin-top: 2px;
 	margin-bottom: 2px;
 	margin-left: 10px;
@@ -525,7 +525,7 @@ div.navbar-header > ul.nav.navbar-right {
 	padding-bottom: 12px;
 	position: absolute;
 	top: 0;
-	left: 300px;
+	right: 0px;
 	flex-direction: row;
 	align-items: baseline;
 }
@@ -565,7 +565,7 @@ a.btn-primary,
 a.btn-primary:not([href]):not([tabindex]){
 	background-color: @btn-primary-bg-color;
 	padding: 5px 10px;
-	margin: 0 15px 20px 0;
+	margin: 0 7px 10px 7px;
 	color: @popover-title-font-color;
 }
 
@@ -642,6 +642,11 @@ div.panel.res-employer > div.panel-heading {
 
 div.panel-body {
 	padding: 15px;
+}
+
+div.alert {
+	margin: 0;
+	padding: 2px;
 }
 
 .subsection > div.card > div.card-block {
@@ -921,7 +926,7 @@ nav.navbar-default .navbar-nav > li > a.open-display-inline {
     background: linear-gradient(@article-bg-color, white); /* Standard syntax */
 }
 
-@media only screen and (max-width: 767px) { 
+@media only screen and (max-width: 770px) {
 	div.navbar-header > ul.nav.navbar-right {
 		background-color: #dddddd;
 		width: 200px;
@@ -993,6 +998,8 @@ nav.navbar-default .navbar-nav > li > a.open-display-inline {
 
 	li.nav,
 	li.nav-item {
+		padding: 5px 0 5px 0;
+		text-align: center;
 		margin-left: 10px;
 		margin-right: 10px;
 	}
@@ -1004,11 +1011,6 @@ nav.navbar-default .navbar-nav > li > a.open-display-inline {
 	nav.navbar .navbar-toggler:focus,
 	nav.navbar .navbar-toggler {
 		display: block;
-	}
-
-	li.nav {
-		padding: 5px 0 5px 0;
-		text-align: center;
 	}
 }
 

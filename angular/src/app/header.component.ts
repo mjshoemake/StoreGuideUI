@@ -136,15 +136,13 @@ constructor(private _logger: LogService, _navItemService: NavItemService, _login
   */
   closeHamburgerMenu() {
 	  let button = document.getElementById('hamburgerButton');
-	  let collapsible = document.getElementById('div-navbar-collapsible');
+	  let collapsible = document.getElementById('containerNavbarCenter');
 	  this.log.info('Collapsing menu after page change...');
 	  if (button) {
-	    button.className='navbar-toggle collapsed';
-	    this.log.info('   HamburgerButton.class==' + button.className);
+	    button.className='navbar-toggler collapsed';
 	  }
 	  if (collapsible) {
 	    collapsible.className='navbar-collapse collapse';
-	    this.log.info('   CollapsibleDiv.class==' + button.className);
 	  }
 	}
 

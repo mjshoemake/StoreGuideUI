@@ -29,13 +29,12 @@ export class PageComponent implements OnDestroy, OnInit {
   navItems: NavItem[] = []
 
   // Messages
-  alertMsg: string = 'Danger, Will Robinson!!  Danger!!';
-  //alertMsg: string = undefined;
-  alertType: string = 'alert-success';
+  alertMsg: string = undefined;
+  // Types:  success, info, warning, danger
+  alertType: string = 'success';
 
   // Preferences
 	showBreadcrumbs: boolean = true;
-	showHint: boolean = true;
 	headerDisplay: string = 'block';
 
 	// Dependencies
@@ -116,5 +115,17 @@ export class PageComponent implements OnDestroy, OnInit {
     this.breadcrumbsComp.add(_href, _displayText);
     this.changeDetectorRef.detectChanges();
   }
+
+  showAlert(_type, _msg: string) {
+    this.alertType = _type;
+    this.alertMsg = _msg;
+  }
+
+  clearAlert() {
+    this.alertMsg = undefined;
+    this.alertType = undefined;
+  }
+
+
 
 }

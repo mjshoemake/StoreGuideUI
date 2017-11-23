@@ -31,20 +31,23 @@
     </div>
 
     &nbsp;<br/>
-    <div class="center-div" style="width: 162px; margin-top: 10px;">
+    <div *ngIf="editing" class="center-div" style="width: 244px; margin-top: 10px;">
       <a (click)="p.close(); saveClicked();" class="btn btn-large btn-primary">Save</a>&nbsp;
       <a (click)="p.close(); clearModel();" class="btn btn-large btn-primary">Cancel</a>
-      *ngIf="
       <a (click)="deleteClicked();" class="btn btn-large btn-primary">Delete</a>
+    </div>
+    <div *ngIf="! editing" class="center-div" style="width: 160px; margin-top: 10px;">
+      <a (click)="p.close(); saveClicked();" class="btn btn-large btn-primary">Save</a>&nbsp;
+      <a (click)="p.close(); clearModel();" class="btn btn-large btn-primary">Cancel</a>
     </div>
   </div>
 </ng-template>
 
 <titledPanel title="Users" addEnabled=true (addClicked)="prepareToAdd()">
-  <p>
+  <div>
     This is the list of users.  You can add a user by clicking the plus sign.  To edit a user, click the user's login ID.
-  </p>
-  <div><div style="width: 8px;" placement="right" [ngbPopover]="popoverContent" #p="ngbPopover" triggers="manual" popoverTitle="User Properties">&nbsp;</div></div><br/>
+  </div>
+  <div><div style="width: 8px;" placement="right" [ngbPopover]="popoverContent" #p="ngbPopover" triggers="manual" popoverTitle="User Properties">&nbsp;</div></div>
   <table width="100%">
     <tr>
       <th>Username</th>
