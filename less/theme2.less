@@ -264,6 +264,8 @@ header.header {
 	background-color: transparent;
 	font-size: 13px;
 	margin-left: 20px;
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 img.app-icon {
@@ -322,7 +324,13 @@ img.best-fit {
 	margin-top: 5px;
 }
 
+.hide {
+	display: none;
+}
 
+.block {
+	display: block;
+}
 
 // Jumbotron 
 div.jumbotron {
@@ -644,9 +652,27 @@ div.panel-body {
 	padding: 15px;
 }
 
-div.alert {
+div.page-alert {
 	margin: 0;
 	padding: 2px;
+	font-size: 14px;
+	position: absolute;
+	top: 116px;
+	left: 15px;
+	right: 15px;
+}
+
+div.page-alert.in {
+	margin: 0;
+	padding: 0;
+}
+
+div.alert {
+	padding: 5px 0 5px 10px;
+}
+
+.alert-dismissible .close {
+	padding: 0 20px;
 }
 
 .subsection > div.card > div.card-block {

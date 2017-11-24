@@ -8,12 +8,13 @@
       <p class="feature-title__subtitle">{{subTitle}}</p>
       <breadcrumbs></breadcrumbs>
       <!-- Types:  success, info, warning, danger -->
-      <div *ngIf="alertMsg">
-        <div class="alert alert-{{alertType}}" role="alert">
-          {{alertMsg}}
-        </div>
-        <div style="font-size: 60%;">&nbsp;</div>
+      <div class="alert alert-{{alertType}} page-alert fade {{alertFadeStatus}}" role="alert">
+<!--
+        <button class="close" (click)="closeAlert();" href="javascript:void(0)">&times;</button>
+-->
+        {{alertMsg}}
       </div>
+      <div style="font-size: 60%;">&nbsp;</div>
     </div>
   </header>
 

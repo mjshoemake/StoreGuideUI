@@ -1,5 +1,5 @@
 //import { ChangeDetectorRef, Component, Injectable, Input, Output, EventEmitter } from '@angular/core';
-import {ChangeDetectorRef, Component, Injectable, Input, OnInit, OnDestroy} from '@angular/core';
+import {ChangeDetectorRef, Component, Injectable, Input, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import { LogService } from './log.service';
 import {PageService} from "./page.service";
 import { BrandIcon } from './brand-icon';
@@ -32,6 +32,7 @@ export class PageComponent implements OnDestroy, OnInit {
   alertMsg: string = undefined;
   // Types:  success, info, warning, danger
   alertType: string = 'success';
+  alertFadeStatus: string = 'in';
 
   // Preferences
 	showBreadcrumbs: boolean = true;
@@ -92,12 +93,16 @@ export class PageComponent implements OnDestroy, OnInit {
         this.changeDetectorRef.detectChanges();
         this.log.info('PageComponent SubTitle observable event received... updated -> ' + this.subTitle);
     });
+    this.log.info('PageComponent.ngOnInit() Initializing alert...')
+    this.showAlert('success', ' ');
+    this.closeAlert();
   }
   // Data Binding From Service END
 
 
   closeHamburgerMenu() {
 	  this.headerComp.closeHamburgerMenu();
+	  this.closeAlert();
 	}
 
   clearBreadcrumbs() {
@@ -119,13 +124,16 @@ export class PageComponent implements OnDestroy, OnInit {
   showAlert(_type, _msg: string) {
     this.alertType = _type;
     this.alertMsg = _msg;
+    this.alertFadeStatus = 'show';
+    window.setTimeout(() => {
+      this.closeAlert();
+    }, 8000);
   }
 
-  clearAlert() {
-    this.alertMsg = undefined;
-    this.alertType = undefined;
+  closeAlert() {
+    this.alertFadeStatus = 'in';
+    //this.alertMsg = undefined;
+    //this.alertType = undefined;
   }
-
-
 
 }

@@ -72,7 +72,7 @@ export class UsersComponent implements OnDestroy, OnInit {
       this.editing = false;
       this.popoverInstructions = "Add User: Please enter the properties of the user you would like to add and click the \"Save\" button.";
       this.popover.open();
-      this.pageComp.clearAlert();
+      this.pageComp.closeAlert();
     }
   }
 
@@ -88,7 +88,7 @@ export class UsersComponent implements OnDestroy, OnInit {
       this.popoverInstructions = "Edit User: Please update the selected user's properties and click the \"Save\" button.";
       this.editing = true;
       this.popover.open();
-      this.pageComp.clearAlert();
+      this.pageComp.closeAlert();
     }
   }
 
@@ -102,26 +102,25 @@ export class UsersComponent implements OnDestroy, OnInit {
 
   deleteClicked() {
     this.usersService.deleteUser(this.model);
-    this.clearModel();
     this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was deleted successfully.");
+    this.clearModel();
     this.popover.close();
   }
 
   private addSaveClicked() {
     this.usersService.addUser(this.model);
-    this.clearModel();
     this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was added successfully.");
+    this.clearModel();
   }
 
   private editSaveClicked() {
 	  this.usersService.updateUser(this.model);
-    this.clearModel();
     this.pageComp.showAlert("success", "User " + this.model.first_name + " " + this.model.last_name + " was updated successfully.");
+    this.clearModel();
   }
 
   clearModel() {
 	  this.model = new User();
-    this.pageComp.clearAlert();
   }
 
   @Input('userList')

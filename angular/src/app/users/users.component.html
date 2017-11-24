@@ -56,7 +56,7 @@
     <tr  *ngFor="let user of usersService.observableList | async">
       <!--      <td><input type="checkbox"/></td>  -->
       <td><a href="javascript:void(0)" (click)="prepareToEdit(user.username)">{{user.username}}</a></td>
-      <td>({{user.first_name}} {{user.last_name}}</td>
+      <td>{{user.first_name}} {{user.last_name}}</td>
     </tr>
   </table>
 </titledPanel>
